@@ -7,14 +7,31 @@ const ListarPessoas = () =>{
     useEffect(()=>{
         async function buscarPessoas(){
             const data = await PessoaService.findMany();
-            console.log(data);
-            console.log(pessoas);
-            setPessoas(data);
+            setPessoas(data.pessoas);
         }
         buscarPessoas();
     },[]);
     return(
-        <h1>Lista de Pessoas</h1>
+        <div>
+            <table border={1}>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {pessoas.map(pessoa => (
+                        <tr key={pessoa.id}>
+                            <td>{pessoa.id}</td>
+                            <td>{pessoa.nome}</td>
+                            <td>{pessoa.usuario?.email ?? ""}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     );
 }
 
